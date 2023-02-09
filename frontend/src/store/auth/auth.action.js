@@ -4,7 +4,7 @@ import {  AUTH_LOGIN_LOADING, AUTH_LOGIN_ERROR,AUTH_LOGIN_SUCCESS, AUTH_LOGOUT_S
 export const authLoginApi = (data) => async (dispatch) => {
   dispatch({ type: AUTH_LOGIN_LOADING})
   try {
-    const res = await axios.post(`http://localhost:8080/user/login`,data);
+    const res = await axios.post(`https://hydrabad-backend-task.onrender.com/user/login`,data);
     return dispatch({ type: AUTH_LOGIN_SUCCESS,payload:res.data})
   } catch (error) {
     dispatch({ type: AUTH_LOGIN_ERROR})
@@ -14,7 +14,7 @@ export const authLoginApi = (data) => async (dispatch) => {
 export const authSignupApi = (data) => async (dispatch) => {
   dispatch({ type: AUTH_SIGNUP_LOADING})
   try {
-    const res = await axios.post(`http://localhost:8080/user/signup`,data);
+    const res = await axios.post(`https://hydrabad-backend-task.onrender.com/user/signup`,data);
     return dispatch({ type: AUTH_SIGNUP_SUCCESS})
   } catch (error) {
     return dispatch({ type: AUTH_SIGNUP_ERROR})

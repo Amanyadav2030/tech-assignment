@@ -28,7 +28,7 @@ const DataCard = ({ title, description, price, id }) => {
       console.log(res.type)
       if (res.type == 'delete/DATA/success') {
         toast({
-          title: 'Data added successfully',
+          title: 'Data Deleted successfully',
           status: 'success',
           isClosable: true,
         });
