@@ -1,0 +1,9 @@
+.table th{
+    color: white;
+}
+.container input[type='text']{
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    background: transparent;
+}
