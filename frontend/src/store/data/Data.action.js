@@ -3,7 +3,7 @@ import {  ADD_DATA_SUCCESS,  DELETE_DATA_SUCCESS, GET_DATA_ERROR, GET_DATA_LOADI
 export const getDataAPI = (token) => async (dispatch) => {
     dispatch({ type: GET_DATA_LOADING });
     try { 
-      const res = await axios.get(`https://hydrabad-backend-task.onrender.com/data`,{
+      const res = await axios.get(`http://localhost:8080/data`,{
         headers: {
             authorization: token
         }
@@ -16,7 +16,7 @@ export const getDataAPI = (token) => async (dispatch) => {
   } 
   export const addDataAPI = (token,data) => async (dispatch) => {
     try {
-      const res = await axios.post(`https://hydrabad-backend-task.onrender.com/data`,data, {
+      const res = await axios.post(`http://localhost:8080/data`,data, {
         headers: {
             authorization: token
         }
@@ -32,7 +32,7 @@ export const getDataAPI = (token) => async (dispatch) => {
   
   export const deleteDataAPI = (token,id) => async (dispatch) => {
     try {
-      const res = await axios.delete(`https://hydrabad-backend-task.onrender.com/data/${id}`, {
+      const res = await axios.delete(`http://localhost:8080/data/${id}`, {
         headers: {
             authorization: token
         }
@@ -46,7 +46,7 @@ export const getDataAPI = (token) => async (dispatch) => {
   }
   export const updateDataAPI = (token,id,data) => async (dispatch) => {
     try {
-      const res = await axios.patch(`https://hydrabad-backend-task.onrender.com/data/${id}`,data, {
+      const res = await axios.patch(`http://localhost:8080/data/${id}`,data, {
         headers: {
             authorization: token
         }

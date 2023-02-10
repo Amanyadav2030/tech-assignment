@@ -6,5 +6,6 @@ export const AUTH_LOGIN_SUCCESS = "auth/login/success";
 export const AUTH_SIGNUP_LOADING = "auth/signup/loading"
 export const AUTH_SIGNUP_ERROR = "auth/signup/error"
 export const AUTH_SIGNUP_SUCCESS = "auth/signup/success"
+export const AUTH_OTP_SUCCESS = "auth/otp/success"
 //LOGOUT API
 export const AUTH_LOGOUT_SUCCESS = "auth/logout"

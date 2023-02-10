@@ -29,6 +29,7 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
+    contact: ""
   });
   const [showPassword, setShowPassword] = React.useState(false);
   const dispatch = useDispatch();
@@ -91,6 +92,10 @@ const Signup = () => {
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
               <Input type="email" name='email' onChange={handleChange} />
+            </FormControl>
+            <FormControl id="email" isRequired>
+              <FormLabel>Contact</FormLabel>
+              <Input type="number" name='contact' onChange={handleChange} />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>

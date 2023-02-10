@@ -12,21 +12,25 @@ import {
   useColorModeValue,
   useToast
 } from '@chakra-ui/react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
-import { authLoginApi } from '../../store/auth/auth.action';
+import { authLoginApi, authOTP } from '../../store/auth/auth.action';
 export default function Login() {
   const toast = useToast();
   const [showPassword, setShowPassword] = useState(false);
   const redirect = useNavigate();
+  const { isAuth, otp } = useSelector((store) => store.authData)
   const dispatch = useDispatch();
+  const [checkOTP, setCheckOTP] = useState("");
   const [info, setInfo] = useState({
     email: "",
     password: "",
+    contact: ""
   });
+  const [showOTP, setShowOTP] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInfo({
@@ -36,6 +40,7 @@ export default function Login() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(info)
     dispatch(authLoginApi(info)).then((res) => {
       console.log(res.type)
       if (res.type == 'auth/login/success') {
@@ -44,6 +49,36 @@ export default function Login() {
           status: 'success',
           isClosable: true,
         })
+        setShowOTP(true);
+        // setTimeout(() => {
+        //   redirect('/');
+        // }, 2000);
+      }
+      // alert("this is my otp", otp);
+    }).catch((err) => {
+      console.log(err.message)
+      toast({
+        title: `${err.response.data} ${err.message}`,
+        status: 'error',
+        isClosable: true,
+      })
+    })
+  }
+  useEffect(() => {
+
+  }, [otp, dispatch]);
+  const handleOTP = () => {
+    console.log('checking', checkOTP);
+    // console.log(otp, 'login otp ');
+    dispatch(authOTP({ otp: checkOTP })).then((res) => {
+      console.log(res.type)
+      if (res.type == 'auth/otp/success') {
+        setShowOTP(false);
+        toast({
+          title: 'Correct OTP',
+          status: 'success',
+          isClosable: true,
+        });
         setTimeout(() => {
           redirect('/');
         }, 2000);
@@ -51,7 +86,7 @@ export default function Login() {
     }).catch((err) => {
       console.log(err.message)
       toast({
-        title: `${err.response.data} ${err.message}`,
+        title: `INVALID OTP`,
         status: 'error',
         isClosable: true,
       })
@@ -79,13 +114,23 @@ export default function Login() {
           </Heading>
           <form onSubmit={handleSubmit} >
             <Stack w={'100%'} spacing={4}>
-              <FormControl id="email" isRequired>
+              <FormControl isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input
                   placeholder="user@gmail.com"
                   _placeholder={{ color: 'gray.500' }}
                   type="email"
                   name='email'
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Contact number</FormLabel>
+                <Input
+                  placeholder="999999999"
+                  _placeholder={{ color: 'gray.500' }}
+                  type="number"
+                  name='contact'
                   onChange={handleChange}
                 />
               </FormControl>
@@ -103,6 +148,18 @@ export default function Login() {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
+              {showOTP ? <> <FormControl isRequired>
+                <FormLabel>My OTP {otp} </FormLabel>
+                <Input
+                  placeholder="999999999"
+                  _placeholder={{ color: 'gray.500' }}
+                  type="number"
+                  name='otp'
+                  onChange={(e) => setCheckOTP(e.target.value)}
+                />
+              </FormControl>
+                <Button onClick={handleOTP}>Check OTP</Button></>
+                : <></>}
               <Stack spacing={6}>
                 <Button
                   bg={'green.400'}
